@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Login</title>
+</head>
+<body>
+    <h2>Đăng nhập Admin</h2>
+
+    <form th:action="@{/admin/login}" method="post">
+        <input type="text" name="username" placeholder="Tên đăng nhập" required><br>
+        <input type="password" name="password" placeholder="Mật khẩu" required><br>
+
+        <!-- Hiện lỗi nếu có -->
+        <div th:if="${param.error}">
+            <p style="color:red;">Sai tài khoản hoặc mật khẩu!</p>
+        </div>
+
+        <button type="submit">Đăng nhập</button>
+    </form>
+
+  
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout/admin">
+<head>
+<meta charset="UTF-8">
+<title>Danh sách danh mục</title>
+</head>
+<body>
+	<div layout:fragment="main">
+		<h1>Danh sách danh mục</h1>
+
+		<!-- Form tìm kiếm -->
+		<form action="/admin/category/search" method="get" class="form-inline">
+			<div class="form-group">
+				<input class="form-control" name="keyword"
+					placeholder="Nhập tên danh mục" th:value="${param.keyword}">
+			</div>
+			<button type="submit" class="btn btn-primary">
+				<i class="fa fa-search"></i> Tìm kiếm
+			</button>
+
+			<!-- Nút Thêm mới -->
+			<a th:href="@{/admin/category/create}"
+				class="btn btn-success pull-right"> <i class="fa fa-plus"></i>
+				Thêm mới
+			</a>
+		</form>
+
+		<!-- Bảng hiển thị danh mục -->
+		<div class="table-responsive">
+			<table class="table table-primary">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Name</th>
+						<th>Status</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="model : ${data}">
+						<td th:text="${model.id}"></td>
+						<td th:text="${model.name}"></td>
+						<td th:text="${model.status == 1 ? 'Hoạt động' : 'Ẩn'}"></td>
+						<td><a th:href="@{'/admin/category/edit/' + ${model.id} }"
+							class="btn btn-sm btn-primary">Sửa</a> <a
+							th:href="@{'/admin/category/delete/' + ${model.id} }"
+							class="btn btn-sm btn-danger"
+							onclick="return confirm('Bạn có chắc chắn muốn xóa danh mục này?');">Xóa</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<nav aria-label="Page navigation">
+			<th:block th:if="${totalPages > 0}">
+				<ul class="pagination d-flex justify-content-center">
+					<li th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+						th:classappend="${i} == ${currentPage} ? 'active'"><a
+						class="page-link" th:href="@{'/admin/category?page=' + ${i}}"
+						th:text="${i + 1}">1</a></li>
+				</ul>
+			</th:block>
+
+		</nav>
+	</div>
+</body>
+</html>

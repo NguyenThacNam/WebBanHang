@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Register</title>
+</head>
+<body>
+    <h2>Đăng ký Admin</h2>
+    <form th:action="@{/admin/register}" method="post" th:object="${admin}">
+        <input type="text" th:field="*{username}" placeholder="Username" required><br>
+        <input type="password" th:field="*{password}" placeholder="Password" required><br>
+        <input type="text" th:field="*{fullName}" placeholder="Full name"><br>
+        <input type="email" th:field="*{email}" placeholder="Email"><br>
+        <input type="text" th:field="*{phone}" placeholder="Phone"><br>
+        <input type="text" th:field="*{address}" placeholder="Address"><br>
+        <button type="submit">Đăng ký</button>
+    </form>
+</body>
+</html>

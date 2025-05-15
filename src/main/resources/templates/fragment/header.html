@@ -1,0 +1,55 @@
+
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+
+
+<body>
+	<div th:fragment="siteHeader">
+		<header>
+			<nav class="navbar navbar-expand navbar-light bg-faded">
+				<div class="container">
+					<a class="navbar-brand" th:href="@{/}"><i class="fas fa-home" style="font-size: 40px;"></i></a>
+					<ul class="navbar-nav me-auto mt-2 mt-lg-0">
+						<li class="nav-item"><a class="nav-link active"
+							th:href="@{products}" aria-current="page">Products <span
+								class="visually-hidden">(current)</span></a></li>
+						<li class="nav-item"><a class="nav-link"
+							sec:authorize="isAuthenticated()" th:href="@{/account}">Account
+								</a> </li>
+
+
+						<li class="nav-item dropdown"><a
+							class="nav-link dropdown-toggle" href="#" id="dropdownId"
+							data-bs-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false">More</a>
+							<div class="dropdown-menu" aria-labelledby="dropdownId">
+								<a class="dropdown-item" href="#">About</a> <a
+									class="dropdown-item" href="#">Contact</a>
+							</div></li>
+						<div th:if="${loggedInUser != null}" class="text-end me-4 mt-2">
+							<span>Xin chào, <b th:text="${loggedInUser.username}"></b>!
+							</span>
+						</div>
+
+
+					</ul>
+					<form th:action="@{/search}" method="get"
+						class="d-flex my-2 my-lg-0">
+						<a th:href="@{/cart}" class="nav-link"> <i
+							class="fas fa-shopping-cart"></i>
+
+						</a> <input class="form-control me-sm-2" type="text" th:name="keyword"
+							placeholder="Tìm kiếm..." required />
+						<button class="btn btn-success my-2 my-sm-0" type="submit">Search
+						</button>
+					</form>
+
+
+				</div>
+			</nav>
+
+		</header>
+	</div>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout/admin">
+<head>
+<meta charset="UTF-8">
+<title>Danh sách sản phẩm</title>
+
+</head>
+<body>
+	<div layout:fragment="main">
+		<h1>Danh sách sản phẩm</h1>
+
+		<!-- Form tìm kiếm -->
+		<form action="/admin/product/search" method="get" class="form-inline">
+			<div class="form-group">
+				<input class="form-control" name="keyword"
+					placeholder="Nhập tên sản phẩm" th:value="${param.keyword}">
+			</div>
+			<button type="submit" class="btn btn-primary">
+				<i class="fa fa-search"></i> Tìm kiếm
+			</button>
+
+			<!-- Nút Thêm mới -->
+			<a th:href="@{/admin/product/create}"
+				class="btn btn-success pull-right"> <i class="fa fa-plus"></i>
+				Thêm mới
+			</a>
+		</form>
+
+		<!-- Bảng hiển thị sản phẩm -->
+		<div class="table-responsive">
+			<table class="table table-primary">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Tên sản phẩm</th>
+						<th>Giá</th>
+						<th>Mô tả</th>
+						<th>Ảnh</th>
+						<th>Danh mục</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="product : ${data}">
+						<td th:text="${product.id}"></td>
+						<td th:text="${product.name}"></td>
+						<td
+							th:text="${#numbers.formatDecimal(product.price, 1, 'COMMA', 2, 'POINT')}"></td>
+
+						<td th:text="${product.description}"></td>
+						<td><img th:src="@{/images/{image}(image=${product.image})}"
+							alt="Ảnh sản phẩm" style="width: 100px; height: auto;"></td>
+						<td th:text="${product.category.name}"></td>
+						<td><a th:href="@{'/admin/product/edit/' + ${product.id} }"
+							class="btn btn-sm btn-primary">Sửa</a> <a
+							th:href="@{'/admin/product/delete/' + ${product.id} }"
+							class="btn btn-sm btn-danger"
+							onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');">Xóa</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<nav aria-label="Page navigation">
+			<th:block th:if="${totalPages != null}">
+				<nav aria-label="Page navigation">
+					<ul class="pagination d-flex justify-content-center">
+						<li th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+							th:classappend="${i} == ${currentPage} ? 'active'"><a
+							class="page-link" th:href="@{'/admin/product?page=' + ${i}}"
+							th:text="${i + 1}">1</a></li>
+					</ul>
+				</nav>
+			</th:block>
+
+		</nav>
+
+
+
+	</div>
+</body>
+</html>

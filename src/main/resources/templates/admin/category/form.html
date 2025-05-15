@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout/admin">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div layout:fragment="main">
+		<h1>Form</h1>
+		<
+		<form th:action="@{/admin/category/save}" method="post"
+			th:object="${category}">
+			<input type="hidden" th:field="*{id}" />
+
+			<div class="mb-3">
+				<label for="name" class="form-label">Tên danh mục</label> <input
+					type="text" id="name" th:field="*{name}" class="form-control"
+					required>
+			</div>
+
+			<div class="mb-3">
+				<label for="status" class="form-label">Trạng thái</label> <select
+					id="status" th:field="*{status}" class="form-control">
+					<option value="1">Hoạt động</option>
+					<option value="0">Không hoạt động</option>
+				</select>
+			</div>
+			<br>
+
+			<button type="submit" class="btn btn-success">
+				<i class="fa fa-save"></i> <span
+					th:text="${category.id} != null ? 'Cập nhật' : 'Thêm mới'"></span>
+			</button>
+		</form>
+
+
+	</div>
+</body>
+</html>
