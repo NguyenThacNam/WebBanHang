@@ -1,11 +1,11 @@
 Chức năng chính
 1. Chức năng Admin
 -Quản lý danh mục sản phẩm
- CRUD (Tạo, Đọc, Cập nhật, Xóa)
- Tìm kiếm danh mục
- Phân trang danh mục
+ ,CRUD (Tạo, Đọc, Cập nhật, Xóa)
+ ,Tìm kiếm danh mục
+, Phân trang danh mục
 -Quản lý sản phẩm
- CRUD sản phẩm
+ ,CRUD sản phẩm
  Tìm kiếm sản phẩm
  Phân trang sản phẩm
 -Quản lý tài khoản admin
