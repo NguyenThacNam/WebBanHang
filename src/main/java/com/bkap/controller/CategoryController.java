@@ -31,14 +31,14 @@ public class CategoryController {
 		return "admin/category/form";
 	}
 	@PostMapping("/save")
-	public String save(@ModelAttribute Category category) {
+	public String save(@ModelAttribute Category category) { // gửi dữ liệu từ form lên 
 		categoryService.saveCategory(category);
 		return "redirect:/admin/category";
 	}
 	
 	//Sửa      
 	@GetMapping("/edit/{id}")
-	public String Edit(@PathVariable Long id, Model model) {
+	public String Edit(@PathVariable Long id, Model model) { // lấy giá trị id ở url
 	    Category category = categoryService.getCategoryById(id).orElse(null);
 	    model.addAttribute("category", category);
 	    return "admin/category/form";
@@ -51,7 +51,7 @@ public class CategoryController {
 	}
     //Tìm kiếm
 	@GetMapping("/search")
-    public String search(@RequestParam(name = "keyword", required = false) String keyword, Model model) {
+    public String search(@RequestParam(name = "keyword", required = false) String keyword, Model model) { // lấy keyword trong url
         model.addAttribute("data", categoryService.searchCategories(keyword));
         model.addAttribute("keyword", keyword);
         return "admin/category/list";

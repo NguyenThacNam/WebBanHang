@@ -2,22 +2,102 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Admin Login</title>
+    <style type="text/css">
+        body {
+            font-family: "Helvetica Neue", "Open sans", sans-serif;
+            background-color: gray;
+            background-image: -webkit-linear-gradient(top left, #a802e0, #f7676a);
+            color: white;
+        }
+
+        .form-group {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        form input {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+            padding: 10px;
+            color: #fff;
+            background-color: transparent;
+            border: 0;
+            border-bottom: 2px solid rgba(255, 255, 255, .2);
+            border-radius: 4px;
+            font-weight: 100;
+            outline: none;
+            letter-spacing: 4px;
+            margin-left: 10px;
+            max-width: 350px;
+        }
+
+        form input:hover,
+        form input:focus {
+            border-bottom: 2px solid rgba(255, 255, 255, .9);
+            border-radius: 5%;
+        }
+
+        form input::placeholder {
+            color: #d3d1d3;
+            font-weight: 100;
+            letter-spacing: 4px;
+            margin-left: 10px;
+        }
+
+        input[type="submit"],
+        button[type="submit"] {
+            margin: 40px auto;
+            border: 1px solid white;
+            display: block;
+            width: 100px;
+            padding: 10px;
+            background-color: transparent;
+            color: white;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        input[type="submit"]:hover,
+        button[type="submit"]:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 1px solid white;
+        }
+
+        .form-group p {
+            margin-top: 10px;
+            text-align: right;
+        }
+
+        .form-group p a {
+            color: rgb(225, 225, 225);
+        }
+
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-    <h2>Đăng nhập Admin</h2>
 
-    <form th:action="@{/admin/login}" method="post">
-        <input type="text" name="username" placeholder="Tên đăng nhập" required><br>
-        <input type="password" name="password" placeholder="Mật khẩu" required><br>
+    <div class="form-group">
+        <h2>Đăng nhập Admin</h2>
+        <form th:action="@{/admin/login}" method="post">
+            <input type="text" name="username" placeholder="Tên đăng nhập" required>
+            <input type="password" name="password" placeholder="Mật khẩu" required>
 
-        <!-- Hiện lỗi nếu có -->
-        <div th:if="${param.error}">
-            <p style="color:red;">Sai tài khoản hoặc mật khẩu!</p>
-        </div>
+            <div th:if="${param.error}" class="error-message">
+                Sai tài khoản hoặc mật khẩu!
+            </div>
 
-        <button type="submit">Đăng nhập</button>
-    </form>
+            <button type="submit">Đăng nhập</button>
+        </form>
+    </div>
 
-  
 </body>
 </html>

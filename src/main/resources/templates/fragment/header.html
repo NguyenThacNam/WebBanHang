@@ -1,6 +1,6 @@
 
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 
 
@@ -9,14 +9,15 @@
 		<header>
 			<nav class="navbar navbar-expand navbar-light bg-faded">
 				<div class="container">
-					<a class="navbar-brand" th:href="@{/}"><i class="fas fa-home" style="font-size: 40px;"></i></a>
+					<a class="navbar-brand" th:href="@{/}"><i class="fas fa-home"
+						style="font-size: 40px;"></i></a>
 					<ul class="navbar-nav me-auto mt-2 mt-lg-0">
 						<li class="nav-item"><a class="nav-link active"
 							th:href="@{products}" aria-current="page">Products <span
 								class="visually-hidden">(current)</span></a></li>
 						<li class="nav-item"><a class="nav-link"
 							sec:authorize="isAuthenticated()" th:href="@{/account}">Account
-								</a> </li>
+						</a></li>
 
 
 						<li class="nav-item dropdown"><a
@@ -36,9 +37,23 @@
 					</ul>
 					<form th:action="@{/search}" method="get"
 						class="d-flex my-2 my-lg-0">
-						<a th:href="@{/cart}" class="nav-link"> <i
-							class="fas fa-shopping-cart"></i>
-
+						<a th:href="@{/cart}" class="nav-link position-relative"> <i
+							class="fas fa-shopping-cart"></i> <span id="cart-count"
+							class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+								0 </span> <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        fetch('/api/cart')
+            .then(res => res.json())
+            .then(cartItems => {
+                let count = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+                const cartBadge = document.getElementById("cart-count");
+                if (cartBadge) {
+                    cartBadge.innerText = count;
+                    cartBadge.style.display = count > 0 ? 'inline-block' : 'none';
+                }
+            });
+    });
+</script>
 						</a> <input class="form-control me-sm-2" type="text" th:name="keyword"
 							placeholder="Tìm kiếm..." required />
 						<button class="btn btn-success my-2 my-sm-0" type="submit">Search
@@ -51,5 +66,8 @@
 
 		</header>
 	</div>
+
+
+
 </body>
 </html>

@@ -85,7 +85,22 @@ header {
 					<p th:text="${product.description}"></p>
 					<p
 						th:text="${#numbers.formatInteger(product.price, 0, 'COMMA')} + ' VNĐ'"></p>
-					<button class="btn btn-primary">Mua ngay</button>
+					<button class="btn btn-primary"  style="width: 160px;">Mua ngay</button>
+					<br>
+					<form th:action="@{/cart/add}" method="post">
+							<input type="hidden" name="productId" th:value="${product.id}" />
+							<input type="hidden" name="productName"
+								th:value="${product.name}" />
+							<!-- Thêm productName -->
+							<input type="hidden" name="image" th:value="${product.image}" />
+							<!-- Thêm image -->
+							<input type="hidden" name="quantity" value="1" /> <input
+								type="hidden" name="price" th:value="${product.price}" />
+							<!-- Thêm price -->
+							<button type="button" class="btn btn-success mt-2"
+							th:attr="onclick=|addToCart(${product.id}, '${product.name}', '${product.image}', 1, ${product.price})|">
+							Thêm vào giỏ hàng</button>
+						</form>
 				</div>
 			</div>
 		</div>

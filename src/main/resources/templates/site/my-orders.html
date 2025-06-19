@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Đơn hàng của tôi</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+	rel="stylesheet">
+	<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+	crossorigin="anonymous" />
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+	<style type="text/css">
+body {
+	background-color: #f0f0f0;
+}
+
+header {
+	background-color: #6c757d;
+	color: white;
+	padding: 15px;
+	box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-nav .nav-link {
+	color: white !important;
+}
+
+.banner img {
+	width: 100%;
+	height: auto;
+	border-radius: 12px;
+	overflow: hidden;
+}
+
+.news {
+	background-color: white;
+	padding: 20px;
+	border-radius: 10px;
+	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.d-flex {
+	align-items: center;
+	gap: 15px;
+}
+
+.nav-link {
+	font-size: 18px;
+	color: black;
+	.
+	form-control
+	{
+	width
+	:
+	200px;
+}
+
+.btn-outline-success {
+	padding: 6px 12px;
+}
+</style>
+</head>
+
+<body class="bg-gray-100">
+    <div th:replace="~{fragment/header::siteHeader}"></div>
+    <br>
+	<div class="container mx-auto p-4">
+		<h1 class="text-2xl font-bold mb-4">Đơn hàng của tôi</h1>
+		<div th:if="${error}" class="text-red-600" th:text="${error}"></div>
+		<div th:if="${orders.isEmpty()}">
+			<p class="text-gray-600">Bạn chưa có đơn hàng nào.</p>
+		</div>
+		<div th:unless="${orders.isEmpty()}">
+			<table class="w-full border-collapse">
+				<thead>
+					<tr class="bg-gray-200">
+						<th class="">Mã đơn hàng</th>
+						<th class="">Ngày đặt</th>
+						<th class="">Trạng thái</th>
+						<th class="">Thanh toán</th>
+						<th class="">Tổng </th>
+						<th class="">Hành động</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="order : ${orders}">
+						<td th:text="${order.id}"></td>
+						<td
+							th:text="${#temporals.format(order.orderDate, 'dd/MM/yyyy HH:mm')}">
+				</td>
+						<td th:text="${order.status}"></td>
+						<td th:text="${order.paymentMethod}"></td>
+						<td th:text="${orderTotals[order.id]} + ' VNĐ'"></td>
+						<td><a th:href="@{'/my-orders/' + ${order.id}}">Xem chi
+								tiết</a></td>
+					</tr>
+
+				</tbody>
+			</table>
+		</div>
+		<a href="/"
+			class="bg-blue-500 text-white p-2 rounded mt-4 inline-block">Quay
+			về trang chủ</a>
+	</div>
+	 <br>
+    <br>
+    <div th:replace="~{fragment/footer::siteFooter}"></div>
+	<script
+		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+		integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+		crossorigin="anonymous"></script>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+		integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+		crossorigin="anonymous"></script>
+</body>
+</html>

@@ -38,7 +38,7 @@ public class CategoryService {
         cateRepo.deleteById(id);
     }
     public Page<Category> getPaginatedCategory(int page, int size) {
-	    Pageable pageable = PageRequest.of(page, size);
+	    Pageable pageable = PageRequest.of(page, size); // tạo trang
 	    return cateRepo.findAll(pageable); // lấy tấy cả sản phẩm theo từng trang 
 	}
 	

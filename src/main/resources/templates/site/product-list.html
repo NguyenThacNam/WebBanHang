@@ -82,7 +82,7 @@ header {
 
 
 	<div class="container">
-		<h2 class="mb-4">Danh sách sản phẩm</h2>
+		<h3 class="mb-4">Danh sách sản phẩm</h3>
 		<div class="row">
 			<!-- Sidebar: Danh mục -->
 			<div class="col-md-3">
@@ -112,6 +112,7 @@ header {
 									th:text="${#numbers.formatInteger(product.price, 0, 'COMMA')} + ' VNĐ'"></p>
 								<a th:href="@{/product/{id}(id=${product.id})}"
 									class="btn btn-primary mt-auto">Xem chi tiết</a>
+									
 							</div>
 						</div>
 					</div>

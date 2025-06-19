@@ -1,17 +1,92 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Đăng nhập</title>
+<title>Đăng nhập</title>
+<style type="text/css">
+body {
+	font-family: "Helvetica Neue", "Open sans", sans-serif;
+	background-color: gray;
+	background-image: -webkit-linear-gradient(top left, #a802e0, #f7676a);
+	color: white;
+}
+
+.form-group {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+form input {
+	display: block;
+	margin-bottom: 10px;
+	font-size: 1.3em;
+	padding: 10px;
+	color: #fff;
+	background-color: transparent;
+	border: 0;
+	border-bottom: 2px solid rgba(255, 255, 255, .2);
+	border-radius: 4px;
+	font-weight: 300;
+	outline: none;
+	font-weight: 100;
+	letter-spacing: 4px;
+	margin-left: 10px;
+	 max-width: 350px;
+}
+
+input .input-field {
+	border: 1px solid black;
+}
+
+form input:hover, form input:focus {
+	border-bottom: 2px solid rgba(255, 255, 255, .9); /
+	border-radius: 5%;
+}
+
+form input::placeholder {
+	color: #d3d1d3;
+	font-weight: 100;
+	letter-spacing: 4px;
+	margin-left: 10px;
+}
+
+input[type="submit"] {
+	margin: 40px auto;
+	border: 1px solid white;
+	display: bl;
+	width: 100px;
+}
+
+input[type="submit"]:hover {
+	border: 1px solid white;
+	display: bl;
+	width: 100px;
+}
+
+.form-group p {
+	margin-top: 10px;
+	text-align: right;
+}
+
+.form-group p a {
+	color: rgb(225, 225, 225);
+}
+</style>
 </head>
 <body>
-    <h2>Đăng nhập</h2>
-    <form th:action="@{/login}" method="post">
-        <label>Tên đăng nhập:</label>
-        <input type="text" name="username" required><br>
-        <label>Mật khẩu:</label>
-        <input type="password" name="password" required><br>
-        <button type="submit">Đăng nhập</button>
-    </form>
-    <p><a th:href="@{/register}">Chưa có tài khoản? Đăng ký</a></p>
+
+	<div class="form-group">
+		<h2>Đăng nhập</h2>
+		<form th:action="@{/login}" method="post">
+			<label>Tên đăng nhập:</label> <input class="input-field" type="text"
+				placeholder="username" name="username" /> <label>Mật khẩu:</label>
+			<input class="input-field" type="password" placeholder="password"
+				name="password" /> <input type="submit" value="login" />
+		</form>
+		<p>
+			Not a member? <a th:href="@{/register}">sign up.</a>
+		</p>
+	</div>
 </body>
 </html>

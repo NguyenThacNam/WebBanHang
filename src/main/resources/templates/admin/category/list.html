@@ -54,14 +54,15 @@
 			</table>
 		</div>
 		<nav aria-label="Page navigation">
-			<th:block th:if="${totalPages > 0}">
+			<th:block th:if="${totalPages > 0}"> 
 				<ul class="pagination d-flex justify-content-center">
 					<li th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
 						th:classappend="${i} == ${currentPage} ? 'active'"><a
 						class="page-link" th:href="@{'/admin/category?page=' + ${i}}"
 						th:text="${i + 1}">1</a></li>
 				</ul>
-			</th:block>
+			</th:block> 
+			
 
 		</nav>
 	</div>

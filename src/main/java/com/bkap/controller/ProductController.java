@@ -45,11 +45,11 @@ public class ProductController {
    }
 
    @PostMapping("/save")
-   public String saveProduct(@ModelAttribute Product product,
+   public String saveProduct(@ModelAttribute Product product, // thêm dl mới
                              @RequestParam("imageFile") MultipartFile file,
                              @RequestParam("categoryId") Long categoryId) {
 
-	   Category category = cateSv.getCategoryById(categoryId).get();
+	   Category category = cateSv.getCategoryById(categoryId).get(); // lấy category từ id
        product.setCategory(category); // gán category vào product
        proSv.saveProduct(product, file); // lưu
        return "redirect:/admin/product";

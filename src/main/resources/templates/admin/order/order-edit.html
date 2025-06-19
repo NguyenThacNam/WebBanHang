@@ -1,0 +1,30 @@
+<!-- templates/admin/order/order-edit.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="layout/admin">
+<head>
+    <meta charset="UTF-8">
+    <title>Sửa đơn hàng</title>
+</head>
+<body>
+    <div layout:fragment="main">
+        <h1>Sửa đơn hàng #<span th:text="${order.id}"></span></h1>
+
+        <form th:action="@{/admin/orders/update-status}" method="post">
+            <input type="hidden" name="id" th:value="${order.id}" />
+
+            <div class="form-group">
+                <label for="status">Trạng thái:</label>
+                <select class="form-control" id="status" name="status">
+                    <option value="PENDING" th:selected="${order.status == 'PENDING'}">Chờ xử lý</option>
+                    <option value="CONFIRMED" th:selected="${order.status == 'CONFIRMED'}">Đã xác nhận</option>
+                    <option value="SHIPPED" th:selected="${order.status == 'SHIPPED'}">Đã giao hàng</option>
+                    <option value="CANCELLED" th:selected="${order.status == 'CANCELLED'}">Đã hủy</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-success">Lưu thay đổi</button>
+            <a th:href="@{/admin/orders}" class="btn btn-secondary">Hủy</a>
+        </form>
+    </div>
+</body>
+</html>

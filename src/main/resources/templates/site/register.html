@@ -2,26 +2,118 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Đăng ký</title>
+    <style>
+        body {
+            font-family: "Helvetica Neue", "Open sans", sans-serif;
+            background-color: gray;
+            background-image: -webkit-linear-gradient(top left, #a802e0, #f7676a);
+            color: white;
+        }
+
+        .form-group {
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        form input {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+            padding: 10px;
+            color: #fff;
+            background-color: transparent;
+            border: 0;
+            border-bottom: 2px solid rgba(255, 255, 255, .2);
+            border-radius: 4px;
+            font-weight: 300;
+            outline: none;
+            letter-spacing: 2px;
+            margin-left: 10px;
+        }
+
+        form input:hover, form input:focus {
+            border-bottom: 2px solid rgba(255, 255, 255, .9);
+            border-radius: 5%;
+        }
+
+        form input::placeholder {
+            color: #d3d1d3;
+            font-weight: 100;
+            letter-spacing: 2px;
+        }
+
+        input[type="submit"], button[type="submit"] {
+            margin: 30px auto;
+            display: block;
+            width: 120px;
+            padding: 10px;
+            background-color: transparent;
+            color: white;
+            border: 1px solid white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover, button[type="submit"]:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        label {
+            margin-left: 10px;
+            font-size: 1em;
+        }
+
+        .form-group p {
+            margin-top: 10px;
+            text-align: right;
+        }
+
+        .form-group p a {
+            color: rgb(225, 225, 225);
+        }
+
+        .form-group .message {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.9em;
+        }
+    </style>
 </head>
 <body>
-    <h2>Đăng ký tài khoản</h2>
-    <form th:action="@{/register}" method="post" th:object="${user}">
-        <label>Username:</label>
-        <input type="text" th:field="*{username}" required><br>
-        <label>Password:</label>
-        <input type="password" th:field="*{password}" required><br>
-        <label>Họ tên:</label>
-        <input type="text" th:field="*{fullName}" required><br>
-        <label>Email:</label>
-        <input type="email" th:field="*{email}" required><br>
-        <label>Điện thoại:</label>
-        <input type="text" th:field="*{phone}" required><br>
-        <label>Địa chỉ:</label>
-        <input type="text" th:field="*{address}" required><br>
-        <button type="submit">Đăng ký</button>
-    </form>
-    
-    <p th:if="${error}" th:text="${error}" style="color:red;"></p>
-    <p th:if="${success}" th:text="${success}" style="color:green;"></p>
+    <div class="form-group">
+        <h2>Đăng ký tài khoản</h2>
+        <form th:action="@{/register}" method="post" th:object="${user}">
+            <label>Username:</label>
+            <input type="text" th:field="*{username}" placeholder="Tên đăng nhập" required>
+
+            <label>Password:</label>
+            <input type="password" th:field="*{password}" placeholder="Mật khẩu" required>
+
+            <label>Họ tên:</label>
+            <input type="text" th:field="*{fullName}" placeholder="Họ và tên" required>
+
+            <label>Email:</label>
+            <input type="email" th:field="*{email}" placeholder="Email" required>
+
+            <label>Điện thoại:</label>
+            <input type="text" th:field="*{phone}" placeholder="Số điện thoại" required>
+
+            <label>Địa chỉ:</label>
+            <input type="text" th:field="*{address}" placeholder="Địa chỉ" required>
+
+            <button type="submit">Đăng ký</button>
+        </form>
+
+        <div class="message">
+            <p th:if="${error}" th:text="${error}" style="color: red;"></p>
+            <p th:if="${success}" th:text="${success}" style="color: lightgreen;"></p>
+        </div>
+
+        <p>
+            Đã có tài khoản? <a th:href="@{/login}">Đăng nhập</a>
+        </p>
+    </div>
 </body>
 </html>

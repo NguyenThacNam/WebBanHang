@@ -1,0 +1,82 @@
+<!-- templates/admin/order-detail.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="layout/admin">
+<head>
+<meta charset="UTF-8">
+<title>Chi tiết đơn hàng</title>
+</head>
+<body>
+	<div layout:fragment="main">
+		<h1>
+			Chi tiết đơn hàng #<span th:text="${order.id}"></span>
+		</h1>
+
+		<table class="table table-bordered">
+			<tr>
+				<th>Người đặt</th>
+				<td th:text="${order.user.username}"></td>
+			</tr>
+			<tr>
+				<th>Ngày đặt</th>
+				<td
+					th:text="${#temporals.format(order.orderDate, 'HH:mm dd/MM/yyyy')}"></td>
+			</tr>
+			<tr>
+				<th>Phương thức thanh toán</th>
+				<td
+					th:text="${order.paymentMethod == 'VNPAY' ? 'VNPAY' : 'Tiền mặt'}"></td>
+			</tr>
+			<tr>
+				<th>Trạng thái</th>
+				<td
+					th:text="${order.status == 'CONFIRMED' ? 'Đã xác nhận' : order.status == 'PENDING' ? 'Chờ xử lý' : order.status == 'SHIPPED' ? 'Đã giao hàng' : 'Đã hủy'}"></td>
+			</tr>
+			<tr>
+				<th>Thanh toán</th>
+				<td
+					th:text="${order.paymentStatus == 'PAID' ? 'Đã thanh toán' : 'Chưa thanh toán'}"></td>
+			</tr>
+		</table>
+
+		<h3>Sản phẩm trong đơn</h3>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+
+					<th>Hình ảnh</th>
+					<th>Tên sản phẩm</th>
+					<th>Số lượng</th>
+					<th>Giá</th>
+					<th>Tổng</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="item : ${order.orderDetails}">
+					<td><img
+						th:src="@{/images/{image}(image=${item.product.image})}"
+						width="80" height="80" alt="Ảnh sản phẩm" /></td>
+					<td th:text="${item.product.name}"></td>
+					<td th:text="${item.quantity}"></td>
+					<td
+						th:text="${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')} + ' đ'"></td>
+					<td
+						th:text="${#numbers.formatDecimal(item.price * item.quantity, 0, 'COMMA', 0, 'POINT')} + ' đ'">200.000
+						đ</td>
+				</tr>
+			</tbody>
+
+		</table>
+		<div class="text-center mt-4">
+			<h4>
+				Tổng đơn hàng: <span
+					th:text="${#numbers.formatDecimal(totalAmount, 0, 'COMMA', 0, 'POINT')} + ' đ'"></span>
+			</h4>
+		</div>
+
+
+		<a th:href="@{/admin/orders}" class="btn btn-secondary">← Quay lại
+			danh sách</a> <a th:href="@{'/admin/orders/edit/' + ${order.id}}"
+			class="btn btn-primary">✎ Sửa đơn hàng</a>
+	</div>
+</body>
+</html>

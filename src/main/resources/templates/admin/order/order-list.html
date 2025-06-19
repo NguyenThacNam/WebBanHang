@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout/admin">
+<head>
+<meta charset="UTF-8">
+<title>Danh sách đơn hàng</title>
+</head>
+<body>
+	<div layout:fragment="main">
+		<h1>Danh sách đơn hàng</h1>
+
+		<div th:if="${success}" style="color: green;" th:text="${success}"></div>
+		<div th:if="${error}" style="color: red;" th:text="${error}"></div>
+
+		<div class="table-responsive">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Người đặt</th>
+						<th>Ngày đặt</th>
+						<th>Phương thức TT</th>
+						<th>Trạng thái</th>
+						<th>Thanh toán</th>
+						<th>Hành động</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="order : ${orders}">
+						<td th:text="${order.id}"></td>
+						<td th:text="${order.user.username}"></td>
+						<td
+							th:text="${#temporals.format(order.orderDate, 'HH:mm dd/MM/yyyy')}">...</td>
+
+
+						<td
+							th:text="${order.paymentMethod == 'VNPAY' ? 'VNPAY' : 'Tiền mặt'}">VNPAY</td>
+						<td
+							th:text="${order.status == 'CONFIRMED' ? 'Đã xác nhận' :
+              order.status == 'PENDING' ? 'Chờ xử lý' :
+              order.status == 'SHIPPED' ? 'Đã giao hàng' :
+              'Đã huỷ'}">
+						</td>
+
+						<td
+							th:text="${order.paymentStatus == 'PAID' ? 'Đã thanh toán' : 'Chưa thanh toán'}">Đã
+							thanh toán</td>
+						<td><a th:href="@{'/admin/orders/view/' + ${order.id}}"
+							class="btn btn-sm btn-info">Xem</a> <a
+							th:href="@{'/admin/orders/edit/' + ${order.id}}"
+							class="btn btn-sm btn-primary">Cập nhật</a>
+							<form th:action="@{/admin/orders/delete}" method="post"
+								style="display: inline;">
+								<input type="hidden" name="id" th:value="${order.id}" />
+								<button type="submit" class="btn btn-sm btn-danger"
+									onclick="return confirm('Bạn có chắc muốn xóa đơn hàng này?');">Xóa</button>
+							</form></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+	</div>
+</body>
+</html>

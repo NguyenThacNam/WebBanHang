@@ -15,6 +15,23 @@
 
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<!-- TOASTR -->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+	rel="stylesheet" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<!-- LOADING SPINNER STYLE -->
+<style>
+#cart-loading {
+	display: none;
+	text-align: center;
+	padding: 1rem;
+	color: #007bff;
+	font-weight: bold;
+}
+</style>
 
 <style type="text/css">
 body {
@@ -65,14 +82,54 @@ header {
 .btn-outline-success {
 	padding: 6px 12px;
 }
+/* Modal giỏ hàng */
+#mini-cart-content {
+	max-height: 60vh;
+	overflow-y: auto;
+}
+
+.cart-item {
+	display: flex;
+	align-items: center;
+	padding: 10px 0;
+	border-bottom: 1px solid #eee;
+}
+
+.cart-item img {
+	width: 50px;
+	height: 50px;
+	object-fit: cover;
+	margin-right: 15px;
+}
+
+.cart-item-info {
+	flex-grow: 1;
+}
+
+.cart-item-actions {
+	display: flex;
+	align-items: center;
+}
+
+#cart-loading-modal {
+	text-align: center;
+	padding: 1rem;
+	color: #007bff;
+	font-weight: bold;
+}
 </style>
 
 
 </head>
+
+
+
+
 <body>
 	<div th:replace="~{fragment/header::siteHeader}"></div>
 	<br>
 	<div th:replace="~{fragment/banner::siteBanner}"></div>
+	<div id="cart-loading">Đang tải giỏ hàng...</div>
 
 	<div class=" news container mt-4">
 		<h2 class="text-center my-4">Sản phẩm mới</h2>
@@ -89,32 +146,24 @@ header {
 						<p
 							th:text="${#numbers.formatInteger(product.price, 0, 'COMMA')} + ' VNĐ'"></p>
 						<a th:href="@{/product/{id}(id=${product.id})}"
-							class="btn btn-primary">Xem chi tiết</a>
-						<form th:action="@{/cart/add}" method="post">
-							<input type="hidden" name="productId" th:value="${product.id}" />
-							<input type="hidden" name="productName"
-								th:value="${product.name}" />
-							<!-- Thêm productName -->
-							<input type="hidden" name="image" th:value="${product.image}" />
-							<!-- Thêm image -->
-							<input type="hidden" name="quantity" value="1" /> <input
-								type="hidden" name="price" th:value="${product.price}" />
-							<!-- Thêm price -->
-							<button type="submit" class="btn btn-success mt-2">Thêm
-								vào giỏ hàng</button>
-						</form>
-
-
+							class="btn btn-primary" style="width: 160px;">Xem chi tiết</a>
+						<!-- Không dùng <form> nữa -->
+						<button type="button" class="btn btn-success mt-2"
+							th:attr="onclick=|addToCart(${product.id}, '${product.name}', '${product.image}', 1, ${product.price})|">
+							Thêm vào giỏ hàng</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<br>
-	<br>
 
+
+
+	<br>
+	<br>
 	<div th:replace="~{fragment/footer::siteFooter}"></div>
-
+	<!-- Modal Giỏ Hàng -->
+	<script src="/js/cart.js"></script>
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"

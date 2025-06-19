@@ -21,10 +21,10 @@ public class ProductDetailController {
 	      Product product = proSv.getProductById(id);
 	      
 	      if (product.getCategory() != null) { 
-	          List<Product> relatedProducts = proSv.getProductsByCategory(product.getCategory());
+	          List<Product> relatedProducts = proSv.getProductsByCategory(product.getCategory()); // lấy tất cả sản phẩm có cùng id
 	          model.addAttribute("relatedProducts", relatedProducts);
 	      } else {
-	          model.addAttribute("relatedProducts", new ArrayList<>());
+	          model.addAttribute("relatedProducts", new ArrayList<>()); // truyền 1 danh sách rỗng
 	      }
 
 	      model.addAttribute("product", product);

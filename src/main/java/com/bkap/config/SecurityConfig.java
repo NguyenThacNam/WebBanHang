@@ -20,28 +20,28 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    // ⚙️ Ưu tiên chuỗi này cho ADMIN
+    //  ADMIN
     @Bean
     @Order(1)
     public SecurityFilterChain adminSecurityFilterChain(HttpSecurity http) throws Exception {
         http
-            .securityMatcher("/admin/**") // chỉ áp dụng cho /admin/**
+            .securityMatcher("/admin/**") // chỉ áp dụng cho /admin/
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/admin/login", "/admin/register").permitAll()
-                .anyRequest().hasRole("ADMIN") // còn lại bắt buộc ADMIN
+                .requestMatchers("/admin/login", "/admin/register").permitAll() // Cho phép truy cập tự do các trang login, register 
+                .anyRequest().hasRole("ADMIN") 
             )
             .formLogin(form -> form
-                .loginPage("/admin/login")
-                .loginProcessingUrl("/admin/login")
-                .defaultSuccessUrl("/admin", true)
+                .loginPage("/admin/login") // trang login admin
+                .loginProcessingUrl("/admin/login") // xử lý 
+                .defaultSuccessUrl("/admin", true) // đăng nhập thành công -> về trang chủ admin
                 .failureUrl("/admin/login?error=true")
                 .permitAll()
             )
             .logout(logout -> logout
                 .logoutUrl("/admin/logout")
                 .logoutSuccessUrl("/admin/login?logout")
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID")
+                .invalidateHttpSession(true) //Hủy session khi logout
+                .deleteCookies("JSESSIONID") // Xóa cookie phiên làm việc
                 .permitAll()
             )
             .userDetailsService(userLoginService);
@@ -49,11 +49,12 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // ⚙️ Mặc định: user, public, v.v.
+    //  user
     @Bean
     @Order(2)
     public SecurityFilterChain userSecurityFilterChain(HttpSecurity http) throws Exception {
         http
+            .csrf().disable()
             .authorizeHttpRequests(auth -> auth
                 .anyRequest().permitAll()
             )
@@ -75,4 +76,6 @@ public class SecurityConfig {
 
         return http.build();
     }
+   
+
 }

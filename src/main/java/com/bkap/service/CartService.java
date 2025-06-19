@@ -11,10 +11,10 @@ import jakarta.servlet.http.HttpSession;
 @Service
 public class CartService {
 
-    private static final String SESSION_CART = "cart";
+    private static final String SESSION_CART = "cart"; // ten thuoc tinh cua cart (.) session
 
-    public List<CartItem> getCart(HttpSession session) {
-        List<CartItem> cart = (List<CartItem>) session.getAttribute(SESSION_CART);
+    public List<CartItem> getCart(HttpSession session) { // lay gio hang tu session
+        List<CartItem> cart = (List<CartItem>) session.getAttribute(SESSION_CART); //truy xuat ds sp
         if (cart == null) {
             cart = new ArrayList<>();
             session.setAttribute(SESSION_CART, cart);
@@ -23,10 +23,10 @@ public class CartService {
     }
 
     public void addToCart(HttpSession session, CartItem item) {
-        List<CartItem> cart = getCart(session);
+        List<CartItem> cart = getCart(session); // lay cart hien tai
         for (CartItem cartItem : cart) {
             if (cartItem.getProductId().equals(item.getProductId())) {
-                cartItem.setQuantity(cartItem.getQuantity() + item.getQuantity());
+                cartItem.setQuantity(cartItem.getQuantity() + item.getQuantity()); // cap nhat so luong
                 return;
             }
         }
@@ -41,7 +41,8 @@ public class CartService {
     public void updateQuantity(HttpSession session, Long productId, int quantity) {
         List<CartItem> cart = getCart(session);
         for (CartItem item : cart) {
-            if (item.getProductId().equals(productId)) {
+            if (item.getProductId().equals(productId)) { // tim thay sp
+            	
                 item.setQuantity(quantity);
                 return;
             }

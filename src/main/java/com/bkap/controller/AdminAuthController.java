@@ -21,7 +21,7 @@ public class AdminAuthController {
     @GetMapping("/register")
     public String showRegisterForm(Model model) {
         model.addAttribute("admin", new User());
-        return "admin/register"; // Tạo view này
+        return "admin/register"; 
     }
 
     @PostMapping("/register")
@@ -31,4 +31,5 @@ public class AdminAuthController {
         userRepo.save(user);
         return "redirect:/admin/login";
     }
+
 }
